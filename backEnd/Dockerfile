@@ -4,6 +4,7 @@ RUN docker-php-ext-install mysqli
 
 WORKDIR /var/www/html
 COPY . .
+RUN test -f /var/www/html/router.php
 
 ENV PORT=10000
 EXPOSE 10000
