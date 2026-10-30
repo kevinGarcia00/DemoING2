@@ -8,4 +8,4 @@ COPY . .
 ENV PORT=10000
 EXPOSE 10000
 
-CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-10000} -t /var/www/html router.php"]
+CMD ["sh", "-c", "exec php -S 0.0.0.0:${PORT:-10000} -t /var/www/html /var/www/html/router.php"]
