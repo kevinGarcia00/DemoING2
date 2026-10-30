@@ -27,9 +27,6 @@ if ($route === '') {
 }
 
 switch ($route) {
-    case 'health':
-        require __DIR__ . '/health.php';
-        break;
     case 'altaUsuario':
         require __DIR__ . '/usuario/altaUsuario.php';
         break;

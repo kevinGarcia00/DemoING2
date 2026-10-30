@@ -1,6 +1,5 @@
 <?php
 
-//Incluimos una única vez el archivo de configuración.
 require_once __DIR__ . '/../config/config.php';
 
 class Connection
@@ -45,7 +44,7 @@ class Connection
             $sslEnabled = true;
         }
 
-        $flags = $sslEnabled ? MYSQLI_CLIENT_SSL : 0;
+        $flags = ($sslEnabled ? MYSQLI_CLIENT_SSL : 0) | MYSQLI_CLIENT_FOUND_ROWS;
         if (!mysqli_real_connect($connection, $host, $user, $password, $database, $port, null, $flags)) {
             throw new RuntimeException('No se pudo conectar con MySQL');
         }
@@ -114,8 +113,9 @@ class Connection
                 return $rows;
             }
 
+            $affectedRows = $statement->affected_rows;
             mysqli_stmt_close($statement);
-            return true;
+            return $affectedRows;
         } catch (Throwable $e) {
             $details = $statement instanceof mysqli_stmt
                 ? sprintf('SQLSTATE %s: %s', $statement->sqlstate, $statement->error)

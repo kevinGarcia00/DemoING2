@@ -1,7 +1,3 @@
 .git
-.env
-.env.*
 *.pem
 *.key
-DEPLOYMENT.md
-database/

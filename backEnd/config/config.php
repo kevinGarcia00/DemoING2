@@ -1,11 +1,11 @@
 <?php
 
 $config = [
-    // Valores de respaldo para MySQL local; Render debe usar variables de entorno.
+    // Valores para MySQL local
     'host' => '127.0.0.1',
     'port' => 3306,
     'database' => 'demoing2',
     'user' => 'root',
-    'password' => '',
+    'password' => 'root',
     'charset' => 'utf8mb4',
 ];
