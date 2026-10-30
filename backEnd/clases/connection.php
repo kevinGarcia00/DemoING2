@@ -68,7 +68,12 @@ class Connection
             $connection = $this->connect();
             $statement = mysqli_prepare($connection, $query);
             if ($statement === false) {
-                error_log(sprintf('MySQL prepare failed (%d)', $connection->errno));
+                error_log(sprintf(
+                    'MySQL prepare failed (%d, SQLSTATE %s): %s',
+                    $connection->errno,
+                    $connection->sqlstate,
+                    $connection->error
+                ));
                 return false;
             }
 
@@ -79,14 +84,24 @@ class Connection
                     $bindParams[] = &$params[$index];
                 }
                 if (!call_user_func_array([$statement, 'bind_param'], $bindParams)) {
-                    error_log(sprintf('MySQL parameter binding failed (%d)', $statement->errno));
+                    error_log(sprintf(
+                        'MySQL parameter binding failed (%d, SQLSTATE %s): %s',
+                        $statement->errno,
+                        $statement->sqlstate,
+                        $statement->error
+                    ));
                     mysqli_stmt_close($statement);
                     return false;
                 }
             }
 
             if (!mysqli_stmt_execute($statement)) {
-                error_log(sprintf('MySQL statement execution failed (%d)', $statement->errno));
+                error_log(sprintf(
+                    'MySQL statement execution failed (%d, SQLSTATE %s): %s',
+                    $statement->errno,
+                    $statement->sqlstate,
+                    $statement->error
+                ));
                 mysqli_stmt_close($statement);
                 return false;
             }
@@ -102,7 +117,15 @@ class Connection
             mysqli_stmt_close($statement);
             return true;
         } catch (Throwable $e) {
-            error_log(sprintf('MySQL operation failed (%s, code %d)', get_class($e), (int) $e->getCode()));
+            $details = $statement instanceof mysqli_stmt
+                ? sprintf('SQLSTATE %s: %s', $statement->sqlstate, $statement->error)
+                : $e->getMessage();
+            error_log(sprintf(
+                'MySQL operation failed (%s, code %d): %s',
+                get_class($e),
+                (int) $e->getCode(),
+                $details
+            ));
             if ($statement instanceof mysqli_stmt) {
                 mysqli_stmt_close($statement);
             }
