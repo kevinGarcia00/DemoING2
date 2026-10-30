@@ -4,7 +4,8 @@ services:
     runtime: docker
     plan: free
     rootDir: backEnd
-    dockerfilePath: ./Dockerfile
+    dockerfilePath: ./backEnd/Dockerfile
+    dockerContext: ./backEnd
     healthCheckPath: /api/health
     envVars:
       - key: DB_HOST
