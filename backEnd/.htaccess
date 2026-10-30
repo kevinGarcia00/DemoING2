@@ -1,0 +1,9 @@
+Options -Indexes
+RewriteEngine On
+
+# No exponer archivos internos ni la configuración de base de datos.
+RewriteRule ^(?:clases|config|database)(?:/|$) - [F,L]
+
+# Enviar las rutas de la API al router PHP, conservando el query string.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ router.php [QSA,L]
