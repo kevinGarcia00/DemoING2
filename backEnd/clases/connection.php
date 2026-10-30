@@ -65,8 +65,10 @@ class Connection
         $statement = null;
 
         try {
-            $statement = mysqli_prepare($this->connect(), $query);
+            $connection = $this->connect();
+            $statement = mysqli_prepare($connection, $query);
             if ($statement === false) {
+                error_log(sprintf('MySQL prepare failed (%d)', $connection->errno));
                 return false;
             }
 
@@ -77,12 +79,14 @@ class Connection
                     $bindParams[] = &$params[$index];
                 }
                 if (!call_user_func_array([$statement, 'bind_param'], $bindParams)) {
+                    error_log(sprintf('MySQL parameter binding failed (%d)', $statement->errno));
                     mysqli_stmt_close($statement);
                     return false;
                 }
             }
 
             if (!mysqli_stmt_execute($statement)) {
+                error_log(sprintf('MySQL statement execution failed (%d)', $statement->errno));
                 mysqli_stmt_close($statement);
                 return false;
             }
@@ -98,6 +102,7 @@ class Connection
             mysqli_stmt_close($statement);
             return true;
         } catch (Throwable $e) {
+            error_log(sprintf('MySQL operation failed (%s, code %d)', get_class($e), (int) $e->getCode()));
             if ($statement instanceof mysqli_stmt) {
                 mysqli_stmt_close($statement);
             }
