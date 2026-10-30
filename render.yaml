@@ -3,9 +3,8 @@ services:
     name: demoing2-api
     runtime: docker
     plan: free
-    rootDir: backEnd
-    dockerfilePath: ./Dockerfile
-    dockerContext: .
+    dockerfilePath: ./backEnd/Dockerfile
+    dockerContext: ./backEnd
     dockerCommand: >-
       sh -c 'exec php -S 0.0.0.0:${PORT:-10000} -t /var/www/html /var/www/html/router.php'
     healthCheckPath: /api/health
