@@ -20,16 +20,6 @@ La API estará disponible en `http://127.0.0.1:8000` y ofrece estos endpoints:
 | `GET` | `/api/listadoUsuarios` | Sin body |
 
 
-### Funcionalidad
-
-#### Render
-
-Ejeuta la aplicacion en la nube y recibe solicitudes PHP.
-
-#### Aiven
-
-Ejecuta MySql y almacena los usuarios del sistema.
-
 
 ## Ejecución en la nube (Render)
 
@@ -59,3 +49,12 @@ La API estará disponible en **https://demoing2.onrender.com** y ofrece estos en
 
 
 
+### Funcionalidad
+
+#### Render
+
+Ejeuta la aplicacion en la nube y recibe solicitudes PHP.
+
+#### Aiven
+
+Ejecuta MySql y almacena los usuarios del sistema.
