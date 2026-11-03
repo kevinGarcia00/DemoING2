@@ -47,8 +47,9 @@ class Connection
         }
 
         $flags = ($sslEnabled ? MYSQLI_CLIENT_SSL : 0) | MYSQLI_CLIENT_FOUND_ROWS;
-        if (!mysqli_real_connect($connection, $host, $user, $password, $database, $port, null, $flags)) {
-            throw new RuntimeException('No se pudo conectar con MySQL');
+        if (!@mysqli_real_connect($connection, $host, $user, $password, $database, $port, null, $flags)) {
+            $connectError = $connection->connect_error ?: 'Error de conexión no especificado';
+            throw new RuntimeException(sprintf('No se pudo conectar con MySQL: %s', $connectError));
         }
 
         if (!mysqli_set_charset($connection, $charset)) {
