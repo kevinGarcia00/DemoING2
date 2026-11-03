@@ -1,12 +1,24 @@
+# Lista de servicios que Render debe crear para este proyecto.
 services:
+    # publica la API como una aplicación web.
   - type: web
-    name: demoing2-api
-    runtime: docker
+  
+    name: demoing2-api # nombre del servicio que aparecerá en el panel de Render.
+    
+    runtime: docker  # indica que debe construir y ejecutar la aplicación con Docker.
+
     plan: free
+
+    # ruta al Dockerfile
     dockerfilePath: ./backEnd/Dockerfile
     dockerContext: ./backEnd
+
+    # comando que inicia el servidor PHP dentro del contenedor.
+    # Render proporciona PORT; si no está definido, se usa el puerto 10000.
     dockerCommand: >-
       sh -c 'exec php -S 0.0.0.0:${PORT:-10000} -t /var/www/html /var/www/html/router.php'
+
+    # variables de entorno que el servicio necesita para conectarse a la base de datos.
     envVars:
       - key: DB_HOST
         sync: false

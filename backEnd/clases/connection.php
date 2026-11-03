@@ -23,6 +23,8 @@ class Connection
         if ($password === false) {
             $password = $config['password'];
         }
+
+        // Configuración SSL
         $sslEnabled = filter_var(getenv('DB_SSL') ?: 'false', FILTER_VALIDATE_BOOLEAN);
         $caFile = getenv('DB_SSL_CA') ?: '';
 
@@ -58,7 +60,7 @@ class Connection
 
         return $this->connection;
     }
-
+    
     public function query(string $query, string $types = '', array $params = [])
     {
         $statement = null;

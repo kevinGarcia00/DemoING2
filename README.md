@@ -18,3 +18,25 @@ La API estará disponible en `http://127.0.0.1:8000` y ofrece estos endpoints:
 | `PUT` | `/api/modificarUsuario` | `idUsuario`, `nombre`, `apellido`, `edad`, `email` |
 | `DELETE` | `/api/eliminarUsuario` | `idUsuario` |
 | `GET` | `/api/listadoUsuarios` | Sin body |
+
+
+## Ejecución en la nube
+
+1. Ingresar a la interfaz de dashboard https://dashboard.render.com/.
+2. Crear un proyecto.
+3. Agregar servicio de tipo "Web Service".
+4. Conectar el repositorio GitHub
+5. Seleccionar el repositorio
+6. Deployar servicio
+
+La API estará disponible en **https://demoing2-api.onrender.com** y ofrece estos endpoints:
+
+| Método | Ruta | Entrada |
+| --- | --- | --- |
+| `POST` | `/api/altaUsuario` | `nombre`, `apellido`, `edad`, `email` |
+| `PUT` | `/api/modificarUsuario` | `idUsuario`, `nombre`, `apellido`, `edad`, `email` |
+| `DELETE` | `/api/eliminarUsuario` | `idUsuario` |
+| `GET` | `/api/listadoUsuarios` | Sin body |
+
+
+
